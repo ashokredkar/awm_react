@@ -1,41 +1,84 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
-const getLocalCartData = () => {
-    let localCartData = localStorage.getItem("AWM Cart");
-    if(localCartData === []){
-        return [];
-    }else{
-        return JSON.parse(localCartData);
-    }
-}
+// Load cart from localStorage
+// const loadCartFromStorage = () => {
+//   if (typeof window !== "undefined") {
+//     const storedCart = localStorage.getItem("cartItems");
+//     return storedCart ? JSON.parse(storedCart) : [];
+//   }
+//   return [];
+// };
 
-const cartSlice = createSlice({
-    name: "cart",
-    // initialState: [],
-    initialState: getLocalCartData(),
-    reducers: {
-        addItem(state, action){
-            if(state.find(item => item.prodID === action.payload.prodID)){
-                alert("Product is already added in the cart, visit the cart to change the quantity");
-            }else{
-                state.push(action.payload);             // manipulating state, feature of createSlice method but is a bad practice in normal Redux
-                localStorage.setItem("AWM Cart", JSON.stringify(state))
-            }
-        },
-        removeItem(state, action){
-            const filteredCart = state.filter(stateItem => stateItem.prodID !== action.payload);
-            localStorage.setItem("AWM Cart", JSON.stringify(filteredCart));
-            return filteredCart;
+export const cartSlice = createSlice({
+  name: "cart",
+  initialState: {
+    items: JSON.parse(localStorage.getItem("cartItems")) || [],
+  },
+  reducers: {
+    addItem: (state, action) => {
+      
+      const presentItem = state.items.find(
+        (p) => p.id === action.payload.id
+      );
+      if (presentItem) {
+        presentItem.quantity++;
+        presentItem.price = presentItem.quantity * presentItem.oneQtyPrice;
+        console.log("R", current(presentItem));
+        
+      } else {
+        state.items.push({ ...action.payload, oneQtyPrice: action.payload.price, quantity: 1 });
+      }
+      // ✅ Show Toast Notification
+      toast.success(`${action.payload.title} added to cart!`);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cartItems", JSON.stringify(state.items));
+      }
+      console.log("ADDED", current(state.items));
+    },
+
+    removeItem: (state, action) => {
+      console.log("REMOVED");
+      
+      state.items = state.items.filter(
+        (p) => p.id !== action.payload.id
+      );
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cartItems", JSON.stringify(state.items));
+      }
+    },
+
+    updateCart: (state, action) => {
+      console.log("UPDATED", action.payload);
+      
+      state.items = state.items.map((p) => {
+        if (p.id === action.payload.id) {
+          if (action.payload.key === "quantity") {
+            p.price = p.oneQtyPrice * action.payload.val;
+          }
+          return { ...p, [action.payload.key]: action.payload.val };
         }
-    }
+        return p;
+      });
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cartItems", JSON.stringify(state.items));
+      }
+    },
+
+    emptyCart: (state, action) => {
+      console.log("EMPTIED");
+      
+      state.items = [];
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("cartItems");
+      }
+    },
+
+    setCartFromStorage: (state, action) => {
+      state.items = action.payload;
+    },
+  },
 });
 
-export const { addItem, removeItem } = cartSlice.actions;
-export default cartSlice.reducer;  
-
-
-
-// PENDING
-// After removing item, save to localStorage  -DONE
-// duplicate items added   --- added alert for now
-// quantity MdFormatIndentIncrease, cart total section
+export const { addItem, removeItem, updateCart, emptyCart, setCartFromStorage } = cartSlice.actions;
+export default cartSlice.reducer;

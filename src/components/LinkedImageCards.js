@@ -1,21 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Loader from './Loader';
 // import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // const LinkedImageCards = ({ dataArray, imagesArray, setProductPageInfo }) => {
 const LinkedImageCards = ({ dataArray }) => {
 
-  // const [loading, setLoading] = useState(true);
-  // const setLoader = () => {
-  //   dataArray ? setLoading(false) : setLoading(true);
-  // }
-  // useEffect(() => {
-  //   // setTimeout(() => {
-  //     setLoader();
-      
-  //   // }, 3000);
-  // }, [loading]);
+  const [loading, setLoading] = useState(true);
+  const [loadedImages, setLoadedImages] = useState(0);
+
+  useEffect(() => {
+    const totalImages = dataArray.length;
+    let loadedCount = 0;
+
+    const handleImageLoad = () => {
+      loadedCount += 1;
+      setLoadedImages(loadedCount);
+
+      if (loadedCount === totalImages) {
+        setLoading(false);
+      }
+    };
+
+    dataArray.forEach(item => {
+      const img = new Image();
+      img.src = item.img;
+      img.onload = handleImageLoad;
+    });
+
+    // Cleanup function to avoid memory leaks
+    return () => {
+      setLoadedImages(0);
+      setLoading(true);
+    };
+  }, [dataArray]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     

@@ -10,7 +10,7 @@ const Navbar = () => {
 
   const [openSearch, setOpenSearch] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
-  const cartItems = useSelector(state => state.cart);
+  const cartItems = useSelector(state => state.cart.items);
 
   return (
     <div id='navbar'>
@@ -33,11 +33,11 @@ const Navbar = () => {
               <input type="search" placeholder='Search' />
             </div>
           </div>
-          <Link to="/cart" className='cart_div'><MdShoppingCart className='nav_icon cart' /><span></span></Link>
+          <Link to="/cart" className='cart_div'><MdShoppingCart className='nav_icon cart' />{cartItems.length>0 && <span>{cartItems.length}</span>}</Link>
           {/* <Link to="/login" className="custom_btn">Login</Link> */}
         </div>
         <div className="menu_right menu_right_mobile">
-          <Link to="/cart" className='cart_div'><MdShoppingCart className='nav_icon cart' /><span></span></Link>
+          <Link to="/cart" className='cart_div'><MdShoppingCart className='nav_icon cart' />{cartItems.length>0 && <span>{cartItems.length}</span>}</Link>
           <BiMenuAltRight className='nav_icon menu' onClick={()=>setOpenSidebar(true)} />
           <div className={`menu_sidebar ${openSidebar && "visible"}`}>
             <div className="sidebar_header">
