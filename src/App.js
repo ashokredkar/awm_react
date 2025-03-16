@@ -30,7 +30,6 @@ function App() {
   
   useEffect(() => {
     window.scrollTo(0, 0);
-    // console.log(cartItems);
   }, []);
 
   const [openModal, setOpenModal] = useState(false);

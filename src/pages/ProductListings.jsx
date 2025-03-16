@@ -45,7 +45,6 @@ const ProductListings = () => {
                 setCurrentData(allData.filter(dataItem => dataItem.target === "non-alcoholic").at(2));
             }
         }
-        // console.log(currentData?.productPageInfo?.title);
     }, [currentData, allData]);
 
     return (

@@ -24,7 +24,6 @@ export const cartSlice = createSlice({
       if (presentItem) {
         presentItem.quantity++;
         presentItem.price = presentItem.quantity * presentItem.oneQtyPrice;
-        console.log("R", current(presentItem));
         
       } else {
         state.items.push({ ...action.payload, oneQtyPrice: action.payload.price, quantity: 1 });
@@ -38,8 +37,6 @@ export const cartSlice = createSlice({
     },
 
     removeItem: (state, action) => {
-      console.log("REMOVED");
-      
       state.items = state.items.filter(
         (p) => p.id !== action.payload.id
       );
@@ -49,8 +46,6 @@ export const cartSlice = createSlice({
     },
 
     updateCart: (state, action) => {
-      console.log("UPDATED", action.payload);
-      
       state.items = state.items.map((p) => {
         if (p.id === action.payload.id) {
           if (action.payload.key === "quantity") {
@@ -66,8 +61,6 @@ export const cartSlice = createSlice({
     },
 
     emptyCart: (state, action) => {
-      console.log("EMPTIED");
-      
       state.items = [];
       if (typeof window !== "undefined") {
         localStorage.removeItem("cartItems");

@@ -1,56 +1,106 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CartItem from "../components/CartItem";
 import { useSelector, useDispatch } from "react-redux";
-import { setCartFromStorage } from "../redux/cartSlice";
-import { Link } from "react-router-dom";
-import emptyCart from "../images/empty-cart.jpg"
+import { setCartFromStorage, emptyCart } from "../redux/cartSlice";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import emptyCartImg from "../images/empty-cart.jpg";
+import { loadStripe } from "@stripe/stripe-js";
+
+// Initialize Stripe - replace with your publishable key
+const stripePromise = loadStripe("pk_test_51MgU4YSCZDwYFEVOL78hnRImX4fndMO5GO8JTI0IVJxGivngE2azshTFLlPXewd3sckyAioyIpW5ovWVROVa4jqA00TL5cC618");
 
 const Cart = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
     const cartItems = useSelector((state) => state.cart.items);
     
     const subTotal = useMemo(() => {
-        return cartItems.reduce((total, val) => total + Number(val.price), 0);
+        return cartItems.reduce((total, val) => total + Number(val.price || 0), 0);
     }, [cartItems]);
+    
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
         if (typeof window !== "undefined") {
-        const storedCart = localStorage.getItem("cartItems");
-        if (storedCart) {
-            dispatch(setCartFromStorage(JSON.parse(storedCart)));
+            const storedCart = localStorage.getItem("cartItems");
+            if (storedCart) {
+                dispatch(setCartFromStorage(JSON.parse(storedCart)));
+            }
+            setLoading(false);
         }
-        setLoading(false);
+    
+        // Handle payment status from URL parameters
+        const query = new URLSearchParams(location.search);
+        const paymentStatus = query.get('payment_status');
+    
+        if (paymentStatus === 'success') {
+            dispatch(emptyCart()); // Clear cart
+            localStorage.removeItem("cartItems"); // Ensure localStorage is cleared
+            setTimeout(() => {
+                navigate('/checkout/success', { replace: true }); // Navigate to success page
+            }, 500); // Delay to allow cart state update
+        } else if (paymentStatus === 'cancelled') {
+            navigate('/checkout/cancel', { replace: true });
         }
-    }, [dispatch]);
+    }, [dispatch, navigate, location.search]);
 
-    const handlePayment = async () => {
+    const handleCheckout = async () => {
         setLoading(true);
         try {
-        // Transform cart items to include full URLs for images
-        const transformedCartItems = cartItems.map((item) => ({
-            ...item,
-            thumbnail: item.thumbnail.startsWith("http")
-            ? item.thumbnail
-            : `${window.location.origin}${item.thumbnail}`,
-        }));
+            // Format cart items for Stripe
+            const lineItems = cartItems.map(item => {
+                // let imageUrl = item.prodImage.startsWith('http') 
+                //     ? item.prodImage 
+                //     : `${window.location.origin}${item.prodImage.startsWith('/') ? '' : '/'}${item.prodImage}`;
+            
+                return {
+                    price_data: {
+                        currency: 'inr',
+                        product_data: {
+                            name: item.title || 'Product',
+                            description: item.desc?.substring(0, 255) || '',
+                            // images: imageUrl ? [imageUrl] : [emptyCartImg],
+                        },
+                        unit_amount: Math.round(Number(item.price || 0) / (item.quantity || 1) * 100), // Fix: Ensure unit price
+                    },
+                    quantity: item.quantity || 1, // Ensure correct quantity is sent
+                };
+            });
+            
 
-        const response = await fetch("/api/checkout", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ cartItems: transformedCartItems }),
-        });
+            // Create checkout session with absolute URLs
+            const response = await fetch("http://localhost:5000/api/create-checkout-session", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    lineItems,
+                    success_url: `${window.location.origin}/#/checkout/success`,
+                    cancel_url: `${window.location.origin}/#/cart?payment_status=cancelled`
+                }),
+            });
 
-        if (!response.ok)
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`HTTP error! Status: ${response.status}. ${errorData.error || ''}`);
+            }
 
-        const data = await response.json();
-        window.location.href = data.url;
+            const { sessionId } = await response.json();
+            
+            // Redirect to Stripe checkout
+            const stripe = await stripePromise;
+            const { error } = await stripe.redirectToCheckout({ sessionId });
+            
+            if (error) {
+                console.error("Stripe checkout error:", error);
+                throw new Error(error.message);
+            }
         } catch (error) {
-        console.error("Payment error:", error);
+            console.error("Payment error:", error);
+            alert(`Payment error: ${error.message}. Please try again.`);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
@@ -72,7 +122,7 @@ const Cart = () => {
                 <div className="subtotal_div">
                     <div className="flex justify-between">
                     <h3>Subtotal</h3>
-                    <h3>&#8377;{Number(subTotal)}</h3>
+                    <h3>&#8377;{Number(subTotal).toFixed(2)}</h3>
                     </div>
                     <p>
                     The subtotal reflects the total price of your order, including
@@ -80,10 +130,10 @@ const Cart = () => {
                     include delivery costs and international transaction fees.
                     </p>
                 </div>
-                <button className="custom_btn" onClick={handlePayment} disabled={loading}>
-                    Checkout
-                    {loading && <svg class="spinner_btn" viewBox="0 0 50 50">
-                        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                <button className="custom_btn" onClick={handleCheckout} disabled={loading}>
+                    Checkout with Stripe
+                    {loading && <svg className="spinner_btn" viewBox="0 0 50 50">
+                        <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
                     </svg>}
                 </button>
                 </div>
@@ -92,8 +142,9 @@ const Cart = () => {
         ) : (
             <div className="empty_cart_div">
             <img
-                src={emptyCart}
+                src={emptyCartImg}
                 alt="Empty Cart"
+                style={{ width: "50%" }}
             />
             <h4>Your cart is empty</h4>
             <span>

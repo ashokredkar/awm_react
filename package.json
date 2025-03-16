@@ -6,6 +6,7 @@
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
     "@reduxjs/toolkit": "^1.6.1",
+    "@stripe/stripe-js": "^6.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -20,6 +21,7 @@
     "react-scroll-to-top": "^3.0.0",
     "react-toastify": "^11.0.5",
     "redux": "^4.1.0",
+    "stripe": "^17.7.0",
     "swiper": "^9.1.1",
     "web-vitals": "^2.1.4"
   },

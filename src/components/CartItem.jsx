@@ -16,12 +16,11 @@ const CartItem = ({ item }) => {
         }
         dispatch(updateCart(payload));
     }
-    console.log("item", item);
     
 
     return (
         <div className="cart_item">
-            <div className="prod_thumbnail"><img src={`..${item.thumbnail}`} alt={item.title} /></div>
+            <div className="prod_thumbnail"><img src={item.prodImage} alt={item.title} /></div>
 
             <div className="item_info">
                 <div className="flex flex-col md:flex-row justify-between">
