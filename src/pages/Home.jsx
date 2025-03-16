@@ -4,10 +4,8 @@ import Slider from '../components/Slider';
 import { Link } from 'react-router-dom';
 import pop_img1 from "../images/pop_collection1.jpg";
 import pop_img2 from "../images/pop_collection2.jpg";
-import location_img from "../images/locations_img.png";
 import map_destinations from "../images/map_destinations.png";
 import subscribe_img from "../images/sign_up_card.jpg";
-import logo from "../images/logo.png";
 import emailjs from '@emailjs/browser';
 
 const Home = () => {

@@ -29,7 +29,7 @@ const PrivacyPolicy = () => {
           In the event your information is sold or transferred as part of a transaction for the sale of the business or assets of AWM your information will continue to be dealt with in accordance with the terms outlined in this policy by the new owner.</p>
 
           <p><strong>Your Personal Information</strong><br />
-          As a user of our website, you are able at any time to access or modify your personal information provided to AWM and associated with your account by going to your <a href='https://twitter.com/settings/account' target="_blank" style={{display: "inline", textDecoration: "underline"}}>account settings</a> and making the necessary changes. If you have any problems with this process, please contact AWM. You may also de-register your account by going to account settings and finalizing your account. If you require AWM to delete your personal information, AWM will do so upon written request from you.</p>
+          As a user of our website, you are able at any time to access or modify your personal information provided to AWM and associated with your account by going to your <a href='https://twitter.com/settings/account' rel="noreferrer" target="_blank" style={{display: "inline", textDecoration: "underline"}}>account settings</a> and making the necessary changes. If you have any problems with this process, please contact AWM. You may also de-register your account by going to account settings and finalizing your account. If you require AWM to delete your personal information, AWM will do so upon written request from you.</p>
 
           <p><strong>Complaints</strong><br />
           If you have any concerns, issues, or complaints in relation to the management of your personal information you should raise such matters with AWM. AWM is committed to respond to any such concerns, issues, or complaints as soon as reasonably practicable. You should address any such issues to through the contact details referred to below.</p>
@@ -38,7 +38,7 @@ const PrivacyPolicy = () => {
           AWM recommend that you review the Privacy Policy from time to time. For example, this Privacy Policy may be revised at time in AWM’s sole discretion, the most current version of the policy will govern the use of your information. By continuing to access or use the website after those changes become effective, you agree to be bound by the revised Privacy Policy.</p>
 
           <p><strong>Australian Information Commissioner</strong><br />
-          If you consider that you require more information assistance in relation to privacy you can contact or view the Australian Information Commissioner website or contact them. The Australian Information Commissioners website is located at <a href='http://www.oiac.gov.au/' target="_blank" style={{display: "inline", textDecoration: "underline"}}>www.oiac.gov.au</a><br />
+          If you consider that you require more information assistance in relation to privacy you can contact or view the Australian Information Commissioner website or contact them. The Australian Information Commissioners website is located at <a href='http://www.oiac.gov.au/' rel="noreferrer" target="_blank" style={{display: "inline", textDecoration: "underline"}}>www.oiac.gov.au</a><br />
           Their address is GPO Box 5218 Sydney NSW 2001. They can be contacted by telephone on <a href="tel:1300 363 992" style={{display: "inline"}}>1300 363 992</a></p>
 
           <p><strong>Contacts</strong><br />

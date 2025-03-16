@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PageHeader from '../components/PageHeader';
 import story_header from "../images/headers/our_story_header.png";
-import location_img from "../images/locations_img.png";
 import map_destinations from "../images/map_destinations.png";
 
 const Story = () => {
-  const [content, setContent] = useState("");
-
   return (
     <div id='story'>
       <PageHeader header_img={story_header} />

@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import ProductCard from "../components/ProductCard";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-// import { useSwiper } from 'swiper/react';
 import SwiperButtons from "../components/SwiperButtons";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { addItem } from "../redux/cartSlice";
 
-// const ProductDetails = ({viewedDetails}) => {
 const ProductDetails = () => {
+
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const dispatch = useDispatch();
-  // const handleCart = (currentViewedDetails) => {
-  //   dispatch(addItem(currentViewedDetails));
-  //   setIsAddedToCart(true);
-  // }
   const handleCart = (currentViewedDetails) => {
     const productPrice =
       currentData?.productPageInfo?.products.find(
@@ -35,7 +29,6 @@ const ProductDetails = () => {
     setIsAddedToCart(true);
   };
 
-  // const swiper = useSwiper();
   const [sliderViewNumber, setSliderViewNumber] = useState(4);
   useEffect(() => {
     if (window.innerWidth < 480) {
@@ -53,7 +46,6 @@ const ProductDetails = () => {
   const [currentData, setCurrentData] = useState({});
   const [currentViewedDetails, setCurrentViewedDetails] = useState({});
   const [sliderProducts, setSliderProducts] = useState([]);
-  const { brand, currentlyViewedId } = useParams(); // Extract route parameters
   const [sliderItemClicked, setSliderItemClicked] = useState(false);
 
   useEffect(() => {
@@ -132,11 +124,9 @@ const ProductDetails = () => {
       });
     }
     setSliderProducts(
-      currentData?.productPageInfo?.products.filter(
-        (product) =>
-          product.linkName !==
-          currentData?.productPageInfo?.products.at(currentProdId).viewedDetails
-            .title
+      currentData?.productPageInfo?.products.filter((product) => 
+        product.linkName !== currentData?.productPageInfo?.products.at(currentProdId).viewedDetails.title &&
+        product.productName !== currentData?.productPageInfo?.products.at(currentProdId).viewedDetails.title
       )
     );
   }, [currentData, allData, sliderItemClicked]);

@@ -7,7 +7,7 @@ import ow2 from "./images/ow2.svg";
 import ow3 from "./images/ow3.svg";
 import ow4 from "./images/ow4.svg";
 import ow5 from "./images/ow5.svg";
-import ow6 from "./images/ow6.svg";
+// import ow6 from "./images/ow6.svg";
 import ow7 from "./images/ow7.svg";
 import ow8 from "./images/ow8.svg";
 
@@ -32,14 +32,14 @@ import magic_p1_header from "./images/headers/magic_p1_header.png";
 import fseason_header from "./images/headers/fseason_header.svg";
 import fseason_p1_header from "./images/headers/fseason_p1_header.png";
 import fseason_p2_header from "./images/headers/fseason_p2_header.png";
-import luigi_header from "./images/headers/luigi_header.png";
-import luigi_p1_header from "./images/headers/luigi_p1_header.svg";
+// import luigi_header from "./images/headers/luigi_header.png";
+// import luigi_p1_header from "./images/headers/luigi_p1_header.svg";
 import mayan6_header from "./images/headers/mayan6_header.png";
 import goldener_header from "./images/headers/goldener_header.png";
 import goldener_p1_header from "./images/headers/goldener_p1_header.svg";
 import ogilhinn_header from "./images/headers/ogilhinn_header.png";
 import betheone_whisky_header from "./images/headers/betheone_whiskey_header.svg";
-import ogilhinn_p1_header from "./images/headers/ogilhinn_p1_header.jpg";
+// import ogilhinn_p1_header from "./images/headers/ogilhinn_p1_header.jpg";
 import whiskys_header from "./images/headers/whiskys_header.png";
 
 
@@ -49,8 +49,8 @@ import spring88_p1 from "./images/products/spring88_p1.png";
 import galiotto_p1 from "./images/products/galiotto_p1.png";
 import galiotto_inner from "./images/products/galiotto_inner.png";
 
-import betheone_p1 from "./images/products/betheone_p1.png";
-import betheone_p2 from "./images/products/betheone_p2.png";
+// import betheone_p1 from "./images/products/betheone_p1.png";
+// import betheone_p2 from "./images/products/betheone_p2.png";
 import betheone_p3 from "./images/products/betheone_p3.png";
 import betheone_p4 from "./images/products/betheone_p4.png";
 import betheone_p5 from "./images/products/betheone_p5.png";
@@ -82,9 +82,9 @@ import fseason_p2 from "./images/products/fseason_p2.png";
 import fseason_p3 from "./images/products/fseason_p3.png";
 import fseason_p4 from "./images/products/fseason_p4.png";
 
-import luigi_p1 from "./images/products/luigi_p1.png";
-import luigi_p2 from "./images/products/luigi_p2.png";
-import luigi_p3 from "./images/products/luigi_p3.png";
+// import luigi_p1 from "./images/products/luigi_p1.png";
+// import luigi_p2 from "./images/products/luigi_p2.png";
+// import luigi_p3 from "./images/products/luigi_p3.png";
 
 import mayan6_p1 from "./images/products/mayan6_p1.png";
 import mayan6_p2 from "./images/products/mayan6_p2.png";

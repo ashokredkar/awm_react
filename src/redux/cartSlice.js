@@ -33,7 +33,6 @@ export const cartSlice = createSlice({
       if (typeof window !== "undefined") {
         localStorage.setItem("cartItems", JSON.stringify(state.items));
       }
-      console.log("ADDED", current(state.items));
     },
 
     removeItem: (state, action) => {

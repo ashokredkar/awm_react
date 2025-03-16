@@ -38,8 +38,8 @@ const Contact = () => {
               </div>
               <div className="c_info">
                 <h4>Socials</h4>
-                <p><a href="https://www.instagram.com/australiawinesmore/" target={"_blank"}>Instagram</a></p>
-                <p><a href="https://www.facebook.com/australiawinesmore" target={"_blank"}>Facebook</a></p>
+                <p><a href="https://www.instagram.com/australiawinesmore" rel="noreferrer" target={"_blank"}>Instagram</a></p>
+                <p><a href="https://www.facebook.com/australiawinesmore" rel="noreferrer" target={"_blank"}>Facebook</a></p>
               </div>
             </div>
             {/* <form className="contact_form" action="https://formspree.io/f/xpzeyzdl" method="POST"> */}

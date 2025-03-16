@@ -259,6 +259,10 @@ span.imp{ color: #E11C3B; }
 
 .empty_cart_div{ display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; width: 50%; margin: 0 auto; height: calc(100vh - 70px); text-align: center; }
 
+.checkout_success{height: calc(100vh - 70px);}
+.success_container{display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; width: 50%; margin: 0 auto; height: 100%;}
+.checkout_success .success_icon-img{width: 150px; height: 150px;}
+
 /* Spinner */
 .spinner { animation: rotate 2s linear infinite; width: 50px; height: 50px; }
 .spinner .path { stroke: #E11C3B; stroke-linecap: round; animation: dash 1.5s ease-in-out infinite; }

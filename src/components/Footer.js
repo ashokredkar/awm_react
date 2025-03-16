@@ -60,8 +60,8 @@ const Footer = () => {
             <br />
             <label style={{marginTop: "27px"}}>Follow Us</label>
             <div className="footer_socials">
-              <a href="https://www.facebook.com/australiawinesmore" target={"_blank"} className="facebook"><img src={fb_icon} alt="instagram" /></a>
-              <a href="https://www.instagram.com/australiawinesmore/" target={"_blank"} className="instagram"><img src={insta_icon} alt="instagram" /></a>
+              <a href="https://www.facebook.com/australiawinesmore" rel="noreferrer" target={"_blank"} className="facebook"><img src={fb_icon} alt="instagram" /></a>
+              <a href="https://www.instagram.com/australiawinesmore/" rel="noreferrer" target={"_blank"} className="instagram"><img src={insta_icon} alt="instagram" /></a>
             </div>
           </div>
         </div>

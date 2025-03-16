@@ -1,3 +1,5 @@
+// Rectify emailjs contact us and stripe account keys
+
 import React, {useState, useEffect, useRef} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
@@ -20,19 +22,20 @@ import Cart from './pages/Cart';
 import ScrollTop from "./ScrollTop";
 import logo from "./images/logo.png";
 import ScrollToTop from "react-scroll-to-top";
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
+import CheckoutSuccess from './pages/CheckoutSuccess';
+import CheckoutCancel from './pages/CheckoutCancel';
 
 function App() {
-
-  // const [productPageInfo, setProductPageInfo] = useState([]);
-  // const [viewedDetails, setViewedDetails] = useState({});
-  // const cartItems = useSelector(state => state.cart);
   
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [openModal, setOpenModal] = useState(false);
+  const [userAbove18, setUserAbove18] = useState(() => {
+    return localStorage.getItem("isAwmUser18") === "true";
+  });
+  
   let dateRef = useRef();
   let monthRef = useRef();
   let yearRef = useRef();
@@ -43,12 +46,13 @@ function App() {
     const userYear = yearRef.current.value;
     const userBirthDate = new Date(`${userYear}-${userMonth}-${userDate}`);
 
-    if(userBirthDate == "Invalid Date"){
+    if(userBirthDate === "Invalid Date"){
       alert("The date you entered is invalid!");
     }else{
       let currentYear = new Date().getFullYear();
       if(currentYear - yearRef.current.value >= 18){
-        setOpenModal(false);
+        setUserAbove18(true);
+        localStorage.setItem("isAwmUser18", "true");
       }else{
         alert("You must be above 18 to visit this website!");
       }
@@ -75,6 +79,8 @@ function App() {
           <Route exact path='/cart' element={<Cart />} />
           {/* <Route exact path='/login' element={<Login />} /> */}
 
+          <Route path="/checkout/success" element={<CheckoutSuccess />} />
+          <Route path="/checkout/cancel" element={<CheckoutCancel />} />
           <Route exact path='/wines/:id' element={<ProductListings />} />
           <Route exact path='/wines/:id/:id' element={<ProductDetails />} />
           <Route exact path='/whiskys/:id' element={<ProductListings />} />
@@ -86,7 +92,7 @@ function App() {
       <ScrollToTop />
       <Footer />
 
-      {openModal && (
+      {userAbove18 === false && (
       <div className="age_verify_modal">
         <form className="my_modal" method='GET' onSubmit={handleModal}>
           <img src={logo} alt="awm_logo" />

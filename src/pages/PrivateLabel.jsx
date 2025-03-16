@@ -2,7 +2,6 @@ import React from 'react';
 import PageHeader from '../components/PageHeader';
 import labels_page_header from "../images/headers/labels_page_header.png";
 import { BiEnvelope } from "react-icons/bi";
-import { Link } from 'react-router-dom';
 
 const PrivateLabel = () => {
   return (
